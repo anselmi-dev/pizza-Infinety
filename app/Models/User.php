@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $with = ['orders'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * Get all of the orders for the User.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

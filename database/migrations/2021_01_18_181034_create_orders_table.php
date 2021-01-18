@@ -13,22 +13,18 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders_status', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
-
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price')->default(0);
-            $table->text('description');
+            $table->text('note');
+            $table->decimal('price');
+            $table->text('dirrection')->nullable();
+            $table->enum('status', ['pending', 'sending', 'delivered', 'cancel'])->default('pending');
 
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders_status')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
-        });   
+        });
     }
 
     /**
@@ -39,6 +35,5 @@ class CreateOrdersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('orders_status');
     }
 }
