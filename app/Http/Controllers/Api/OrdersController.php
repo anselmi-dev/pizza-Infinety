@@ -42,6 +42,8 @@ class OrdersController extends Controller
 
         $order->update($request->all());
 
+        dispatch(new \App\Jobs\SendEmailJobStatus($order));
+
         return response()->json([
             'data' => $order
         ]);
@@ -76,9 +78,12 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+
         $request['note'] = json_encode($request->all());
 
         $order = Order::create($request->all());
+
+        dispatch(new \App\Jobs\SendEmailJobPizza($order));
 
         return response()->json([
             'data' => $order

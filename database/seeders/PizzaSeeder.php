@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Pizza;
-use App\Models\Ingredients;
+use App\Models\Ingredient;
 
 class PizzaSeeder extends Seeder
 {
@@ -16,19 +16,16 @@ class PizzaSeeder extends Seeder
     public function run()
     {
         //  INGREDIENTES
-        $salame = Ingredients::firstOrCreate([
-            'name' => 'Salame',
-            'price' => 10,
+        $salame = Ingredient::firstOrCreate([
+            'name' => 'Salame'
         ]);
 
-        $quesoParmensano = Ingredients::firstOrCreate([
-            'name' => 'Queso parmesano',
-            'price' => 15,
+        $quesoParmensano = Ingredient::firstOrCreate([
+            'name' => 'Queso parmesano'
         ]);
 
-        $anchoas = Ingredients::firstOrCreate([
-            'name' => 'Anchoas',
-            'price' => 5
+        $anchoas = Ingredient::firstOrCreate([
+            'name' => 'Anchoas'
         ]);
 
         //  PIZZAS

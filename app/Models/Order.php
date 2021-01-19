@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $with = ['user'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,4 +23,12 @@ class Order extends Model
         'status',
         'user_id'
     ];
+
+    /**
+     * Get the user associated with the order.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

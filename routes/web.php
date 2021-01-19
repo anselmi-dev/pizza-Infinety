@@ -29,5 +29,3 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
     Route::get('/ingredientes', [App\Http\Controllers\AdminController::class, 'ingredients'])->name('ingredients.index');
     Route::get('/ordenes', [App\Http\Controllers\AdminController::class, 'orders'])->name('orders.index');
 });
-
-

@@ -5546,6 +5546,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -48614,6 +48617,16 @@ var render = function() {
         _c("div", { staticClass: "block text-lg" }, [
           _vm._v("\n            #" + _vm._s(_vm.order.id) + "\n            "),
           _c("strong", [_vm._v(_vm._s(_vm.note.name))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex -mx-1 flex-wrap" }, [
+          _c("strong", { staticClass: "mx-1" }, [
+            _vm._v(_vm._s(_vm.order.user.name))
+          ]),
+          _vm._v(" | "),
+          _c("span", { staticClass: "mx-1" }, [
+            _vm._v(_vm._s(_vm.order.user.email))
+          ])
         ]),
         _vm._v(" "),
         _c(

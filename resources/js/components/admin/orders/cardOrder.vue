@@ -8,6 +8,9 @@
                 <strong>{{ note.name }}</strong>
             </div>
             <div class="flex -mx-1 flex-wrap">
+                <strong class="mx-1">{{ order.user.name }}</strong> | <span class="mx-1">{{ order.user.email }}</span>
+            </div>
+            <div class="flex -mx-1 flex-wrap">
                 <div v-for="(ingredient, index) in note.ingredients" :key="index" class="bg-gray-200 px-1 m-1 rounded">
                     {{ ingredient.name }}
                 </div>

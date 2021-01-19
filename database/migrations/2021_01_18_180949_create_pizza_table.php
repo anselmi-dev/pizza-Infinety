@@ -21,17 +21,16 @@ class CreatePizzaTable extends Migration
             $table->string('image')->nullable();
             $table->timestamps();
         });
-        
+
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->decimal('price')->default(0);
             $table->string('slug');
             $table->timestamps();
         });
 
         Schema::create('ingredient_pizza', function (Blueprint $table) {
-            $table->bigIncrements('id');        
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('pizza_id');
             $table->foreign('pizza_id')
