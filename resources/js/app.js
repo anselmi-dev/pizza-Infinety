@@ -8,6 +8,19 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+import VueBus from 'vue-bus';
+Vue.use(VueBus);
+
+import gsap from "gsap";
+import VueNotification from "@kugatsu/vuenotification";
+Vue.use(VueNotification, {
+    position: 'bottomRight'
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

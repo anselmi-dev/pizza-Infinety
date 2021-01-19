@@ -25,6 +25,12 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "tailwindcss": "^2.0.2"
+        "@kugatsu/vuenotification": "^1.1.4",
+        "gsap": "^3.6.0",
+        "tailwindcss": "^2.0.2",
+        "vue-bus": "^1.2.1",
+        "vue-loading-overlay": "^3.4.2",
+        "vue-multiselect": "^2.1.6",
+        "vuelidate": "^0.7.6"
     }
 }
