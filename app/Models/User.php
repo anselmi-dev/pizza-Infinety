@@ -42,12 +42,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['is_admin'];
+
     /**
      * Get all of the orders for the User.
      */
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute()
+    {
+        return $this->role != 'client';
     }
 }

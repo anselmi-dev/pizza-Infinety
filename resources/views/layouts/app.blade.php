@@ -7,6 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="base_api" content="{{ url('/') }}">
+
+    <meta name="USER_ID" content="{{ Auth::id() }}">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -18,19 +22,24 @@
 
     <!-- ICons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/solid.css">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <div class="wrapper">
-            @include('layouts.header')
+            <header>
+                @include('layouts.header')
+                @if (session('notification'))
+                    <div class="bg-red-200 border-l-4 text-center p-2" role="alert">
+                      <p>{{ session('notification') }}</p>
+                    </div>
+                @endif
+            </header>
 
             <main class="flex-grow">
                 @yield('content')
             </main>
-
             @include('layouts.footer')
         </div>
     </div>

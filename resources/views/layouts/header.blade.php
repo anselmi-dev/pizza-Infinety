@@ -1,6 +1,5 @@
 <div class="relative bg-white shadow-lg ">
     <div class="px-20 py-6">
-
       <!-- nav -->
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-center">
@@ -20,11 +19,6 @@
             </div> --}}
         </div>
         <div class="hidden md:flex items-center justify-center">
-            <a class="text-lg font-medium bg-gray-200 px-6 py-3 rounded-3xl rounded text-true-gray-800 hover:text-cool-gray-700 transition duration-150 ease-in-out"
-                href="{{ route('pizzas.index') }}">
-                {{ __('Pizzas') }}
-            </a>
-            <div class="h-10 mx-3 bg-gray-800 border border-gray-300 hidden lg:flex"></div>
             @guest
                 @if (Route::has('login'))
                     <a class="mr-5 text-lg font-medium text-true-gray-800 hover:text-cool-gray-700 transition duration-150 ease-in-out"
@@ -39,6 +33,13 @@
                     </a>
                 @endif
             @else
+                @if (Auth::user()->is_admin)
+                    <a class="text-lg font-medium bg-red-200 px-6 py-3 rounded-3xl rounded text-true-gray-800 hover:text-cool-gray-700 transition duration-150 ease-in-out mr-3"
+                        href="{{ route('admin.dashboard') }}">
+                        {{ __('Admin') }}
+                    </a>
+                @endif
+
                 <a class="mr-5 text-lg font-medium text-true-gray-800 hover:text-cool-gray-700 transition duration-150 ease-in-out"
                    href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
