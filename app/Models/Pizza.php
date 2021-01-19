@@ -11,8 +11,8 @@ class Pizza extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $with = ['igredients'];
-    
+    protected $with = ['ingredients'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,7 +34,7 @@ class Pizza extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-    
+
     /**
      * Get all of the ingredients for the Pizza.
      */

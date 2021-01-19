@@ -13,11 +13,14 @@ use \App\Models\User;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/pizzas', [App\Http\Controllers\HomeController::class, 'index'])->name('pizzas');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('/pizzas', App\Http\Controllers\PizzaController::class);
+
+// Route::get('/pizzas', [App\Http\Controllers\HomeController::class, 'index'])->name('pizzas');
