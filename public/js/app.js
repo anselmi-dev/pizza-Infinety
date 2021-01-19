@@ -6228,7 +6228,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -49606,11 +49605,10 @@ var render = function() {
         "flex flex-col justify-center items-center px-4 my-8 w-full sm:w-1/2 md:w-1/3"
     },
     [
-      _c("a", {
+      _c("div", {
         staticClass:
           "bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center",
-        style: { backgroundImage: "url(" + _vm.image + ")" },
-        attrs: { href: _vm.url }
+        style: { backgroundImage: "url(" + _vm.image + ")" }
       }),
       _vm._v(" "),
       _c(

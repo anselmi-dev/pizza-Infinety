@@ -76,7 +76,7 @@
                             class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                             href="{{ route('register') }}"
                         >
-                            Create an Account!
+                            {{ __('Create an Account!') }}
                         </a>
                     </div>
                     @if (Route::has('password.request'))

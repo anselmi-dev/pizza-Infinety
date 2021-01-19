@@ -1,10 +1,9 @@
 <template>
     <div class="flex flex-col justify-center items-center px-4 my-8 w-full sm:w-1/2 md:w-1/3">
-        <a
-            :href="url"
+        <div
             v-bind:style="{ backgroundImage: 'url(' + image + ')' }"
             class="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center">
-        </a>
+        </div>
         <div class="w-9/12 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
             <div class="py-2 text-center font-bold uppercase tracking-wide text-gray-800 px-2">
                 {{ pizza.name }}
