@@ -16,39 +16,12 @@
 
 <script>
     import CardPizza from './CardPizza'
-    import PizzasServices from '../../services/pizzas.services'
+    import PizzasMixin from '../../mixins/pizzas.mixin'
 
     export default {
+        mixins: [PizzasMixin],
         components: {
             CardPizza
         },
-        data () {
-            return {
-                isLoading: true,
-                data: [],
-                next_page_url: null
-            }
-        },
-        beforeMount() {
-            this.getPizzas()
-        },
-        methods: {
-            getPizzas () {
-                this.isLoading = true
-                PizzasServices.all({
-                    next_page_url: this.next_page_url
-                }).then((resp) => {
-                    this.data = [
-                        ...this.data,
-                        ...resp.data
-                    ]
-                    this.next_page_url = resp.next_page_url
-                    console.log({resp})
-                })
-                .finally (() => {
-                    this.isLoading = false
-                })
-            }
-        }
     }
 </script>

@@ -19,8 +19,12 @@ use \App\Models\User;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\PizzaController::class, 'index'])->name('home');
 
 Route::resource('/pizzas', App\Http\Controllers\PizzaController::class);
 
-// Route::get('/pizzas', [App\Http\Controllers\HomeController::class, 'index'])->name('pizzas');
+Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/pizzas', [App\Http\Controllers\AdminController::class, 'pizzas'])->name('pizzas.index');
+    Route::get('/ingredientes', [App\Http\Controllers\AdminController::class, 'ingredients'])->name('ingredients.index');
+});
+

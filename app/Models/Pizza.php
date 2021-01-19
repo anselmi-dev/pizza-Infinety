@@ -40,6 +40,6 @@ class Pizza extends Model
      */
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredients::class, 'ingredient_pizza', 'pizza_id', 'ingredient_id');
+        return $this->belongsToMany(Ingredient::class, 'ingredient_pizza', 'pizza_id', 'ingredient_id');
     }
 }

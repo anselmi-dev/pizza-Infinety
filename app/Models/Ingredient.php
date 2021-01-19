@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Ingredients extends Model
+class Ingredient extends Model
 {
     use HasFactory, HasSlug;
 

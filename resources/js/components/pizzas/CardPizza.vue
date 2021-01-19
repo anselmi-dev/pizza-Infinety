@@ -13,7 +13,9 @@
                 <h1 class="text-gray-800 font-bold px-1">
                     USD {{ pizza.price }}
                 </h1>
-                <button class="bg-red-600 text-xs text-white px-2 py-1 font-semibold rounded uppercase hover:bg-gray-700 px-1">
+                <button
+                    @click="addOrder()"
+                    class="bg-red-600 text-xs text-white px-2 py-1 font-semibold rounded uppercase hover:bg-gray-700 px-1">
                     comprar
                 </button>
             </div>
@@ -22,6 +24,8 @@
 </template>
 
 <script>
+import OrdersServices from '../../services/orders.services'
+
 export default {
     props: {
         pizza: {
@@ -35,6 +39,17 @@ export default {
         },
         image () {
             return this.pizza.image ? this.pizza.image : 'img/empy.jpg'
+        }
+    },
+    methods: {
+        addOrder () {
+            if (document.querySelector('meta[name="USER_ID"]').content)  {
+                OrdersServices.store(this.pizza).then((resp) => {
+                    this.$notification.dark(`Su pizza ${this.pizza.name} ya está siendo procesada`, {  timer: 10 });
+                })
+            } else{
+                this.$notification.error("Debe iniciar sesión para continuar", {  timer: 10 });
+            }
         }
     }
 }
