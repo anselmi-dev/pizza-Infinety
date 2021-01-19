@@ -31167,6 +31167,12 @@ video {
           animation: bounce 1s infinite;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
