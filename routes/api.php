@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('pizzas', App\Http\Controllers\Api\PizzaController::class);
 Route::resource('ingredients', App\Http\Controllers\Api\IngredientsController::class);
+Route::resource('orders', App\Http\Controllers\Api\OrdersController::class);
