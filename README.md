@@ -10,4 +10,9 @@ $ php artisan storage:link
 $ php artisan migrate --seed
 $ php artisan queue:listen
 $ php artisan serve
+
+# Credenciales para la sección administrativa.
+$ 'email' => develop@pizzainfinety.com
+$ 'password' => dev123
+
 ```
