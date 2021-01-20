@@ -34,7 +34,7 @@ class PizzaController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required||unique:pizzas|string|min:3|',
+            'name' => 'required|unique:pizzas|string|min:3',
             'price' => 'required',
             'ingredients' => 'required',
         ]);
@@ -95,6 +95,19 @@ class PizzaController extends Controller
             return response()->json([
                 'message' => Lang::get('Pizza not found')
             ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3|unique:pizzas,name,'.$pizza->id,
+            'price' => 'required',
+            'ingredients' => 'required',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400); // 400 being the HTTP code for an invalid request.
         }
 
         if ($request->file('file')) {

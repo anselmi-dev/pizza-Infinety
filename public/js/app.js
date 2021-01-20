@@ -5311,13 +5311,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       ingredient: {},
-      options: []
+      options: [],
+      errors: {}
     };
   },
   methods: {
@@ -5327,9 +5332,23 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.errors = {};
         _services_ingredient_services__WEBPACK_IMPORTED_MODULE_0__.default.store(this.ingredient).then(function (resp) {
+          _this.ingredient = {};
+          _this.errors = {};
+
           _this.$bus.emit('crud:ingredient:list');
-        })["catch"](function (error) {});
+
+          _this.$notification.dark("Se agreg\xF3 un nuevo ingrediente", {
+            timer: 10
+          });
+        })["catch"](function (err) {
+          if (err.errors) _this.errors = err.errors;
+
+          _this.$notification.error("Ocurrio un error al editar su pizza.", {
+            timer: 10
+          });
+        });
       }
     }
   },
@@ -5367,6 +5386,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5376,6 +5399,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   beforeMount: function beforeMount() {
     this.$bus.on('crud:ingredient:list', this.initial);
+    this.$bus.on('crud:ingredient:edit', this.handleEditIngredient);
     this.$bus.on('crud:ingredient:create', this.handleCreateIngredient);
   },
   methods: {
@@ -5387,8 +5411,116 @@ __webpack_require__.r(__webpack_exports__);
     isVisible: function isVisible(name) {
       return this.showComponent === name;
     },
+    handleEditIngredient: function handleEditIngredient(ingredient) {
+      this.currentIngredient = ingredient;
+      this.showComponent = 'edit';
+    },
     handleCreateIngredient: function handleCreateIngredient() {
       this.showComponent = 'create';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var _services_ingredient_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/ingredient.services */ "./resources/js/services/ingredient.services.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    ingredient: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    }
+  },
+  data: function data() {
+    return {
+      options: [],
+      errors: {}
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.errors = {};
+        _services_ingredient_services__WEBPACK_IMPORTED_MODULE_0__.default.update(this.ingredient).then(function (resp) {
+          _this.$bus.emit('crud:ingredient:list');
+
+          _this.$notification.dark("Se agreg\xF3 un nuevo ingrediente", {
+            timer: 10
+          });
+        })["catch"](function (err) {
+          if (err.errors) _this.errors = err.errors;
+
+          _this.$notification.error("Ocurrio un error al editar su ingrediente.", {
+            timer: 10
+          });
+        });
+      }
+    }
+  },
+  validations: {
+    ingredient: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
+        minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.minLength)(4)
+      }
     }
   }
 });
@@ -5407,6 +5539,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _services_ingredient_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/ingredient.services */ "./resources/js/services/ingredient.services.js");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5469,6 +5606,9 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    handleEdit: function handleEdit(ingredient) {
+      this.$bus.emit('crud:ingredient:edit', ingredient);
+    },
     getIngredients: function getIngredients() {
       var _this2 = this;
 
@@ -5593,6 +5733,10 @@ __webpack_require__.r(__webpack_exports__);
       _services_orders_services__WEBPACK_IMPORTED_MODULE_0__.default.update(this.order).then(function (resp) {
         _this.isLoading = false;
       })["catch"](function (err) {
+        _this.$notification.error("Ocurrio un error al actualizar el estado de la orden.", {
+          timer: 10
+        });
+
         _this.isLoading = false;
       });
     }
@@ -5807,6 +5951,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5824,7 +5981,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     _services_pizzas_services__WEBPACK_IMPORTED_MODULE_1__.default.getIngredients().then(function (resp) {
-      console.log(resp);
       _this.options = resp;
     });
   },
@@ -5839,8 +5995,18 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.$v.$invalid) {
         _services_pizzas_services__WEBPACK_IMPORTED_MODULE_1__.default.store(this.pizza).then(function (resp) {
+          _this2.pizza = {};
+
           _this2.$bus.emit('crud:pizza:list');
-        })["catch"](function (error) {});
+
+          _this2.$notification.dark("Se acaba de agregar una nueva pizza.", {
+            timer: 10
+          });
+        })["catch"](function (error) {
+          _this2.$notification.error("Ocurrio un error al crear su pizza.", {
+            timer: 10
+          });
+        });
       }
     }
   },
@@ -6026,6 +6192,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6043,7 +6220,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      options: []
+      options: [],
+      errors: {}
     };
   },
   beforeMount: function beforeMount() {
@@ -6063,9 +6241,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
+        this.errors = {};
         _services_pizzas_services__WEBPACK_IMPORTED_MODULE_1__.default.update(this.pizza).then(function (resp) {
           _this2.$bus.emit('crud:pizza:list');
-        })["catch"](function (error) {});
+
+          _this2.$notification.dark("Se acaba editar ".concat(_this2.pizza.name, " la correctamente"), {
+            timer: 10
+          });
+        })["catch"](function (err) {
+          if (err.errors) _this2.errors = err.errors;
+
+          _this2.$notification.error("Ocurrio un error al editar su pizza.", {
+            timer: 10
+          });
+        });
       }
     }
   },
@@ -6509,8 +6698,8 @@ var IngredientServices = /*#__PURE__*/function () {
           data: data
         }).then(function (resp) {
           resolve(resp.data.data);
-        })["catch"](function (err) {
-          reject(err);
+        })["catch"](function (error) {
+          reject(error.response.data);
         });
       });
     }
@@ -6523,8 +6712,23 @@ var IngredientServices = /*#__PURE__*/function () {
           method: 'DELETE'
         }).then(function (resp) {
           resolve(resp.data.data);
-        })["catch"](function (err) {
-          reject(err);
+        })["catch"](function (error) {
+          reject(error.response.data);
+        });
+      });
+    }
+  }, {
+    key: "update",
+    value: function update(data) {
+      return new Promise(function (resolve, reject) {
+        axios({
+          url: BASE_URL + "/api/ingredients/".concat(data.id),
+          data: data,
+          method: 'PUT'
+        }).then(function (resp) {
+          resolve(resp.data.data);
+        })["catch"](function (error) {
+          reject(error.response.data);
         });
       });
     }
@@ -6538,8 +6742,8 @@ var IngredientServices = /*#__PURE__*/function () {
           method: 'POST'
         }).then(function (resp) {
           resolve(resp.data.data);
-        })["catch"](function (err) {
-          reject(err);
+        })["catch"](function (error) {
+          reject(error.response.data);
         });
       });
     }
@@ -6691,8 +6895,8 @@ var PizzaService = /*#__PURE__*/function () {
           }
         }).then(function (resp) {
           resolve(resp.data.data);
-        })["catch"](function (err) {
-          reject(err);
+        })["catch"](function (error) {
+          reject(error.response.data);
         });
       });
     }
@@ -47579,6 +47783,45 @@ component.options.__file = "resources/js/components/admin/ingredients/CrudIngred
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/ingredients/EditIngredient.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/admin/ingredients/EditIngredient.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditIngredient.vue?vue&type=template&id=4757e8da& */ "./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da&");
+/* harmony import */ var _EditIngredient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditIngredient.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _EditIngredient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__.render,
+  _EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/ingredients/EditIngredient.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/ingredients/TableIngredients.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/components/admin/ingredients/TableIngredients.vue ***!
@@ -47962,6 +48205,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditIngredient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditIngredient.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditIngredient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/ingredients/TableIngredients.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************!*\
   !*** ./resources/js/components/admin/ingredients/TableIngredients.vue?vue&type=script&lang=js& ***!
@@ -48136,6 +48395,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudIngredients_vue_vue_type_template_id_f551a788___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudIngredients_vue_vue_type_template_id_f551a788___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CrudIngredients.vue?vue&type=template&id=f551a788& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/CrudIngredients.vue?vue&type=template&id=f551a788&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditIngredient_vue_vue_type_template_id_4757e8da___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditIngredient.vue?vue&type=template&id=4757e8da& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da&");
 
 
 /***/ }),
@@ -48353,6 +48629,16 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _vm.errors.name
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.name[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.$v.ingredient.name.$error
               ? _c("p", { staticClass: "text-red-500" }, [
                   _vm._v(
@@ -48439,10 +48725,139 @@ var render = function() {
             expression: "isVisible('create')"
           }
         ]
+      }),
+      _vm._v(" "),
+      _c("EditIngredient", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isVisible("edit"),
+            expression: "isVisible('edit')"
+          }
+        ],
+        attrs: { ingredient: _vm.currentIngredient }
       })
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/ingredients/EditIngredient.vue?vue&type=template&id=4757e8da& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render,
+/* harmony export */   "staticRenderFns": () => /* binding */ staticRenderFns
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "w-full md:w-4/5 lg:w-1/2 mx-auto" }, [
+    _vm.ingredient
+      ? _c("div", { staticClass: "px-8 pt-6 pb-8 mb-4 bg-white rounded" }, [
+          _c("div", { staticClass: "mb-4" }, [
+            _c(
+              "label",
+              {
+                staticClass: "block mb-2 font-bold text-gray-700",
+                attrs: { for: "name" }
+              },
+              [_vm._v("\n                Nombre\n            ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.trim.lazy",
+                  value: _vm.ingredient.name,
+                  expression: "ingredient.name",
+                  modifiers: { trim: true, lazy: true }
+                }
+              ],
+              staticClass:
+                "w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline",
+              class: { "border-red-500": _vm.$v.ingredient.name.$error },
+              attrs: {
+                id: "name",
+                type: "text",
+                name: "name",
+                placeholder: "Nombre del ingrediente",
+                required: ""
+              },
+              domProps: { value: _vm.ingredient.name },
+              on: {
+                change: function($event) {
+                  _vm.$set(_vm.ingredient, "name", $event.target.value.trim())
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors.name
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.name[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.ingredient.name.$error
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    El nombre del ingrediente debe tener al menos " +
+                      _vm._s(_vm.$v.ingredient.name.$params.minLength.min) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-full -m-1 mb-4 mt-10" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "px-6 py-1 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none mx-2",
+                on: {
+                  click: function($event) {
+                    return _vm.$bus.emit("crud:ingredient:list")
+                  }
+                }
+              },
+              [_vm._v("\n                Cancelar\n            ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass:
+                  "px-6 py-2 transition ease-in duration-200 uppercase rounded-full bg-red-600 hover:bg-red-700  text-white focus:outline-none mx-1",
+                on: { click: _vm.submit }
+              },
+              [_vm._v("\n                Guardar\n            ")]
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48527,6 +48942,23 @@ var render = function() {
                   "px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium -mx-1"
               },
               [
+                _c(
+                  "button",
+                  {
+                    staticClass: "bg-gray-500 rounded text-white p-2 mx-1",
+                    on: {
+                      click: function($event) {
+                        return _vm.handleEdit(ingredient)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Editar\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
@@ -48887,6 +49319,16 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _vm.errors.name
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.name[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.$v.pizza.name.$error
               ? _c("p", { staticClass: "text-red-500" }, [
                   _vm._v(
@@ -48938,6 +49380,16 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.errors.price
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.price[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.$v.pizza.price.$error
               ? _c("p", { staticClass: "text-red-500" }, [
@@ -48999,6 +49451,16 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _vm.errors.ingredients
+                ? _c("p", { staticClass: "text-red-500" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.errors.price[0]) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _vm.$v.pizza.ingredients.$error
                 ? _c("p", { staticClass: "text-red-500" }, [
                     _vm._v(
@@ -49032,7 +49494,17 @@ var render = function() {
                   on: { change: _vm.onChangeImage }
                 })
               ]
-            )
+            ),
+            _vm._v(" "),
+            _vm.errors.image
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.image[0]) +
+                      "\n            "
+                  )
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "w-full -m-1 mb-4 mt-10" }, [
@@ -49194,6 +49666,16 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _vm.errors.name
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.name[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.$v.pizza.name.$error
               ? _c("p", { staticClass: "text-red-500" }, [
                   _vm._v(
@@ -49245,6 +49727,16 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.errors.price
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.price[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.$v.pizza.price.$error
               ? _c("p", { staticClass: "text-red-500" }, [
@@ -49306,6 +49798,16 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _vm.errors.ingredients
+                ? _c("p", { staticClass: "text-red-500" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.errors.price[0]) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _vm.$v.pizza.ingredients.$error
                 ? _c("p", { staticClass: "text-red-500" }, [
                     _vm._v(
@@ -49339,7 +49841,17 @@ var render = function() {
                   on: { change: _vm.onChangeImage }
                 })
               ]
-            )
+            ),
+            _vm._v(" "),
+            _vm.errors.image
+              ? _c("p", { staticClass: "text-red-500" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.image[0]) +
+                      "\n            "
+                  )
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "w-full -m-1 mb-4 mt-10" }, [
@@ -63781,6 +64293,7 @@ exports.withParams = withParams;
 var map = {
 	"./components/admin/ingredients/CreateIngredient.vue": "./resources/js/components/admin/ingredients/CreateIngredient.vue",
 	"./components/admin/ingredients/CrudIngredients.vue": "./resources/js/components/admin/ingredients/CrudIngredients.vue",
+	"./components/admin/ingredients/EditIngredient.vue": "./resources/js/components/admin/ingredients/EditIngredient.vue",
 	"./components/admin/ingredients/TableIngredients.vue": "./resources/js/components/admin/ingredients/TableIngredients.vue",
 	"./components/admin/orders/cardOrder.vue": "./resources/js/components/admin/orders/cardOrder.vue",
 	"./components/admin/orders/listOrders.vue": "./resources/js/components/admin/orders/listOrders.vue",

@@ -11,7 +11,7 @@
                     class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     :class="{'border-red-500': $v.ingredient.name.$error}"
                     name="name"
-                    placeholder="Nombre de la pizza"
+                    placeholder="Nombre del ingrediente"
                     v-model.trim.lazy="ingredient.name"
                     required>
 
@@ -41,9 +41,14 @@
     import IngredientServices from '../../../services/ingredient.services'
 
     export default {
+        props: {
+            ingredient: {
+                type: Object,
+                default: () => { return {} }
+            }
+        },
         data () {
             return {
-                ingredient: {},
                 options: [],
                 errors: {}
             }
@@ -53,17 +58,15 @@
                 this.$v.$touch()
                 if (!this.$v.$invalid) {
                     this.errors = {}
-                    IngredientServices.store(this.ingredient)
+                    IngredientServices.update(this.ingredient)
                     .then((resp) => {
-                        this.ingredient = {}
-                        this.errors = {}
                         this.$bus.emit('crud:ingredient:list');
                         this.$notification.dark(`Se agregó un nuevo ingrediente`, {  timer: 10 });
                     })
                     .catch(err => {
                         if (err.errors)
                             this.errors = err.errors
-                        this.$notification.error("Ocurrio un error al editar su pizza.", {  timer: 10 });
+                        this.$notification.error("Ocurrio un error al editar su ingrediente.", {  timer: 10 });
                     })
                 }
             }

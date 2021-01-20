@@ -37,8 +37,8 @@ class PizzaService {
             }).then(resp => {
                 resolve(resp.data.data)
             })
-            .catch(err => {
-                reject(err)
+            .catch(error => {
+                reject(error.response.data)
             })
         })
     }

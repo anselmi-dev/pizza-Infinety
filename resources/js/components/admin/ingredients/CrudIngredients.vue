@@ -6,6 +6,10 @@
         <CreateIngredient
             v-show="isVisible('create')"/>
 
+        <EditIngredient
+            :ingredient="currentIngredient"
+            v-show="isVisible('edit')"/>
+
     </div>
 </template>
 
@@ -19,6 +23,7 @@
         },
         beforeMount() {
             this.$bus.on('crud:ingredient:list', this.initial);
+            this.$bus.on('crud:ingredient:edit', this.handleEditIngredient);
             this.$bus.on('crud:ingredient:create', this.handleCreateIngredient);
         },
         methods: {
@@ -29,6 +34,10 @@
             },
             isVisible (name) {
                 return this.showComponent === name;
+            },
+            handleEditIngredient (ingredient) {
+                this.currentIngredient = ingredient;
+                this.showComponent = 'edit';
             },
             handleCreateIngredient () {
                 this.showComponent = 'create';

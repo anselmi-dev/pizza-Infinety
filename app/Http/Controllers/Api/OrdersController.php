@@ -16,7 +16,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::paginate(6);
+        $orders = Order::orderByRaw("FIELD(status, \"pending\", \"completed\", \"cancel\")")->paginate(6);
 
         return response()->json([
             'data' => $orders

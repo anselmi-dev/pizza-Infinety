@@ -15,6 +15,10 @@
                     v-model.trim.lazy="pizza.name"
                     required>
 
+                    <p class="text-red-500" v-if="errors.name">
+                        {{ errors.name[0] }}
+                    </p>
+
                     <p class="text-red-500" v-if="$v.pizza.name.$error">
                         El nombre de la pizza debe tener al menos {{ $v.pizza.name.$params.minLength.min }}
                     </p>
@@ -33,13 +37,16 @@
                     placeholder="USD 00.00"
                     v-model.trim.lazy="pizza.price"
                     required>
-
+                    <p class="text-red-500" v-if="errors.price">
+                        {{ errors.price[0] }}
+                    </p>
                     <p class="text-red-500" v-if="$v.pizza.price.$error">
                         Debe colocar un valor válido.
                     </p>
             </div>
 
             <div class="mb-4">
+
                 <label class="block mb-2 font-bold text-gray-700" for="price">
                     Ingredientes
                 </label>
@@ -57,7 +64,9 @@
                             <strong>{{ option.name }}</strong>
                         </template>
                     </multiselect>
-
+                    <p class="text-red-500" v-if="errors.ingredients">
+                        {{ errors.price[0] }}
+                    </p>
                     <p class="text-red-500" v-if="$v.pizza.ingredients.$error">
                         Debe seleccionar por lo menos un ingrediente.
                     </p>
@@ -73,7 +82,11 @@
                         name="image"
                         v-on:change="onChangeImage">
                 </label>
+                <p class="text-red-500" v-if="errors.image">
+                    {{ errors.image[0] }}
+                </p>
             </div>
+
 
             <div class="w-full -m-1 mb-4 mt-10">
                 <button class="px-6 py-1 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none mx-2" @click="$bus.emit('crud:pizza:list')">
@@ -102,7 +115,6 @@
         },
         beforeMount () {
             PizzasServices.getIngredients().then((resp) => {
-                console.log(resp)
                 this.options = resp
             })
         },
@@ -115,9 +127,13 @@
                 if (!this.$v.$invalid) {
                     PizzasServices.store(this.pizza)
                     .then((resp) => {
+                        this.pizza = {}
                         this.$bus.emit('crud:pizza:list');
+                        this.$notification.dark("Se acaba de agregar una nueva pizza.", {  timer: 10 });
                     })
-                    .catch((error) => {})
+                    .catch((error) => {
+                        this.$notification.error("Ocurrio un error al crear su pizza.", {  timer: 10 });
+                    })
                 }
             }
         },

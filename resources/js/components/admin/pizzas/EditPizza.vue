@@ -15,6 +15,10 @@
                     v-model.trim.lazy="pizza.name"
                     required>
 
+                    <p class="text-red-500" v-if="errors.name">
+                        {{ errors.name[0] }}
+                    </p>
+
                     <p class="text-red-500" v-if="$v.pizza.name.$error">
                         El nombre de la pizza debe tener al menos {{ $v.pizza.name.$params.minLength.min }}
                     </p>
@@ -33,7 +37,9 @@
                     placeholder="USD 00.00"
                     v-model.trim.lazy="pizza.price"
                     required>
-
+                    <p class="text-red-500" v-if="errors.price">
+                        {{ errors.price[0] }}
+                    </p>
                     <p class="text-red-500" v-if="$v.pizza.price.$error">
                         Debe colocar un valor válido.
                     </p>
@@ -58,7 +64,9 @@
                             <strong>{{ option.name }}</strong>
                         </template>
                     </multiselect>
-
+                    <p class="text-red-500" v-if="errors.ingredients">
+                        {{ errors.price[0] }}
+                    </p>
                     <p class="text-red-500" v-if="$v.pizza.ingredients.$error">
                         Debe seleccionar por lo menos un ingrediente.
                     </p>
@@ -74,6 +82,9 @@
                         name="image"
                         v-on:change="onChangeImage">
                 </label>
+                <p class="text-red-500" v-if="errors.image">
+                    {{ errors.image[0] }}
+                </p>
             </div>
 
             <div class="w-full -m-1 mb-4 mt-10">
@@ -103,7 +114,8 @@
         },
         data () {
             return {
-                options: []
+                options: [],
+                errors: {}
             }
         },
         beforeMount () {
@@ -118,11 +130,17 @@
             submit () {
                 this.$v.$touch()
                 if (!this.$v.$invalid) {
+                    this.errors = {}
                     PizzasServices.update(this.pizza)
                     .then((resp) => {
                         this.$bus.emit('crud:pizza:list');
+                        this.$notification.dark(`Se acaba editar ${this.pizza.name} la correctamente`, {  timer: 10 });
                     })
-                    .catch((error) => {})
+                    .catch(err => {
+                        if (err.errors)
+                            this.errors = err.errors
+                        this.$notification.error("Ocurrio un error al editar su pizza.", {  timer: 10 });
+                    })
                 }
             }
         },

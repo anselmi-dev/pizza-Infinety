@@ -51,6 +51,40 @@ class IngredientsController extends Controller
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $ingredient = Ingredient::find($id);
+
+        if (!$ingredient) {
+            return response()->json([
+                'message' => Lang::get('Ingredient not found')
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3|unique:ingredients,name,'.$ingredient->id,
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400); // 400 being the HTTP code for an invalid request.
+        }
+
+        $ingredient->update($request->all());
+
+        return response()->json([
+            'data' => $ingredient
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.

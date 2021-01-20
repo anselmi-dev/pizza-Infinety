@@ -87,6 +87,7 @@ export default {
             OrdersServices.update(this.order).then((resp) => {
                 this.isLoading = false
             }).catch((err) => {
+                this.$notification.error("Ocurrio un error al actualizar el estado de la orden.", {  timer: 10 });
                 this.isLoading = false
             })
         }

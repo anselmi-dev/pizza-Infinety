@@ -10,8 +10,8 @@ class IngredientServices {
             }).then(resp => {
                 resolve(resp.data.data)
             })
-            .catch(err => {
-                reject(err)
+            .catch(error => {
+                reject(error.response.data)
             })
         })
     }
@@ -24,8 +24,23 @@ class IngredientServices {
             }).then(resp => {
                 resolve(resp.data.data)
             })
-            .catch(err => {
-                reject(err)
+            .catch(error => {
+                reject(error.response.data)
+            })
+        })
+    }
+
+    update (data) {
+        return new Promise((resolve, reject) => {
+            axios({
+                url: BASE_URL + `/api/ingredients/${data.id}`,
+                data,
+                method: 'PUT',
+            }).then(resp => {
+                resolve(resp.data.data)
+            })
+            .catch(error => {
+                reject(error.response.data)
             })
         })
     }
@@ -39,8 +54,8 @@ class IngredientServices {
             }).then(resp => {
                 resolve(resp.data.data)
             })
-            .catch(err => {
-                reject(err)
+            .catch(error => {
+                reject(error.response.data)
             })
         })
     }

@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->text('note');
             $table->decimal('price');
             $table->text('dirrection')->nullable();
-            $table->enum('status', ['pending', 'sending', 'completed', 'cancel'])->default('pending');
+            $table->enum('status', ['pending', 'completed', 'cancel'])->default('pending');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
