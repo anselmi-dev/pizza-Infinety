@@ -19,6 +19,9 @@
         <div class="flex w-3/5 md:w/12">
             <div class="w-1/2 px-4">
                 <div class="text-right">
+                    <span class="block">
+                        Creada: {{ order.created_at | date }}
+                    </span>
                     USD {{ note.price }}
                 </div>
             </div>
@@ -70,6 +73,12 @@ export default {
                     label: 'Cancelado'
                 },
             ]
+        }
+    },
+    filters: {
+        date (value) {
+            let current_datetime = new Date(value)
+            return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
         }
     },
     computed: {

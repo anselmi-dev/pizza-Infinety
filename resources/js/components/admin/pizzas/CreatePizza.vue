@@ -15,7 +15,7 @@
                     v-model.trim.lazy="pizza.name"
                     required>
 
-                    <p class="text-red-500" v-if="errors.name">
+                    <p class="text-red-500" v-if="errors && errors.name">
                         {{ errors.name[0] }}
                     </p>
 
@@ -37,7 +37,7 @@
                     placeholder="USD 00.00"
                     v-model.trim.lazy="pizza.price"
                     required>
-                    <p class="text-red-500" v-if="errors.price">
+                    <p class="text-red-500" v-if="errors && errors.price">
                         {{ errors.price[0] }}
                     </p>
                     <p class="text-red-500" v-if="$v.pizza.price.$error">
@@ -64,7 +64,7 @@
                             <strong>{{ option.name }}</strong>
                         </template>
                     </multiselect>
-                    <p class="text-red-500" v-if="errors.ingredients">
+                    <p class="text-red-500" v-if="errors && errors.ingredients">
                         {{ errors.price[0] }}
                     </p>
                     <p class="text-red-500" v-if="$v.pizza.ingredients.$error">
@@ -109,6 +109,7 @@
         components: { Multiselect },
         data () {
             return {
+                errors: {},
                 pizza: {},
                 options: []
             }

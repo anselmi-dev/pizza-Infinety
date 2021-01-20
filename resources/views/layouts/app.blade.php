@@ -20,8 +20,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- ICons -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/solid.css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>

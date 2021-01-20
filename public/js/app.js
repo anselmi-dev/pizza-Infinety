@@ -5689,6 +5689,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5715,6 +5718,12 @@ __webpack_require__.r(__webpack_exports__);
         label: 'Cancelado'
       }]
     };
+  },
+  filters: {
+    date: function date(value) {
+      var current_datetime = new Date(value);
+      return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+    }
   },
   computed: {
     is_disabled: function is_disabled() {
@@ -5769,13 +5778,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5973,6 +5975,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      errors: {},
       pizza: {},
       options: []
     };
@@ -6396,6 +6399,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _services_orders_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/orders.services */ "./resources/js/services/orders.services.js");
+//
+//
+//
 //
 //
 //
@@ -49084,6 +49090,13 @@ var render = function() {
       _c("div", { staticClass: "flex w-3/5 md:w/12" }, [
         _c("div", { staticClass: "w-1/2 px-4" }, [
           _c("div", { staticClass: "text-right" }, [
+            _c("span", { staticClass: "block" }, [
+              _vm._v(
+                "\n                    Creada: " +
+                  _vm._s(_vm._f("date")(_vm.order.created_at)) +
+                  "\n                "
+              )
+            ]),
             _vm._v(
               "\n                USD " +
                 _vm._s(_vm.note.price) +
@@ -49236,18 +49249,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
         _c("h3", { staticClass: "text-blue-dark py-4 font-normal text-lg" }, [
           _vm._v("\n                  Ordenes\n              ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex" }, [
-          _c(
-            "button",
-            {
-              staticClass:
-                "appearance-none py-4 text-blue-dark border-b border-blue-dark mr-3",
-              attrs: { type: "button" }
-            },
-            [_vm._v("\n                    List\n                ")]
-          )
         ])
       ])
     ])
@@ -49319,7 +49320,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm.errors.name
+            _vm.errors && _vm.errors.name
               ? _c("p", { staticClass: "text-red-500" }, [
                   _vm._v(
                     "\n                    " +
@@ -49381,7 +49382,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm.errors.price
+            _vm.errors && _vm.errors.price
               ? _c("p", { staticClass: "text-red-500" }, [
                   _vm._v(
                     "\n                    " +
@@ -49451,7 +49452,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.errors.ingredients
+              _vm.errors && _vm.errors.ingredients
                 ? _c("p", { staticClass: "text-red-500" }, [
                     _vm._v(
                       "\n                    " +
@@ -50123,69 +50124,97 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "flex flex-col justify-center items-center px-4 my-8 w-full sm:w-1/2 md:w-1/3"
-    },
-    [
+  return _c("div", { staticClass: "p-4 max-w-full md:w-1/2 " }, [
+    _c("div", { staticClass: "md:flex shadow-lg h-50" }, [
       _c("div", {
         staticClass:
-          "bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center",
+          "w-full md:w-1/3 h-50 rounded-lg rounded-r-none pb-5/6 bg-gray-200",
+        staticStyle: {
+          "background-position": "center",
+          "background-size": "cover"
+        },
         style: { backgroundImage: "url(" + _vm.image + ")" }
       }),
       _vm._v(" "),
       _c(
         "div",
         {
-          staticClass:
-            "w-9/12 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden"
+          staticClass: "w-full md:w-2/3 px-4 py-4 bg-white rounded-lg",
+          staticStyle: {
+            display: "flex",
+            "flex-wrap": "wrap",
+            "justify-content": "space-between",
+            "flex-direction": "column"
+          }
         },
         [
-          _c(
-            "div",
-            {
-              staticClass:
-                "py-2 text-center font-bold uppercase tracking-wide text-gray-800 px-2"
-            },
-            [_vm._v("\n            " + _vm._s(_vm.pizza.name) + "\n        ")]
-          ),
+          _c("div", [
+            _c("div", { staticClass: "flex items-center" }, [
+              _c(
+                "h2",
+                { staticClass: "text-2xl text-gray-800 font-medium mr-auto" },
+                [_vm._v(_vm._s(_vm.pizza.name))]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              { staticClass: "text-sm text-gray-700 mt-4 -mx-1" },
+              _vm._l(_vm.pizza.ingredients, function(ingredient, index) {
+                return _c(
+                  "span",
+                  { key: index, staticClass: "mx-1 rounded bg-gray-200 p-2" },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(ingredient.name) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass:
-                "flex items-center justify-between py-2 px-3 bg-gray-400 -mx-1"
-            },
+            { staticClass: "flex items-center justify-end mt-4 top-auto" },
             [
-              _c("h1", { staticClass: "text-gray-800 font-bold px-1" }, [
-                _vm._v(
-                  "\n                USD " +
-                    _vm._s(_vm.pizza.price) +
-                    "\n            "
-                )
-              ]),
+              _c(
+                "p",
+                {
+                  staticClass:
+                    "text-red-500 font-semibold tracking-tighter mr-auto "
+                },
+                [
+                  _vm._v(
+                    "\n                    USD " +
+                      _vm._s(_vm.pizza.price) +
+                      "\n                "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "button",
                 {
                   staticClass:
-                    "bg-red-600 text-xs text-white px-2 py-1 font-semibold rounded uppercase hover:bg-gray-700 px-1",
+                    " bg-red-400 hover:bg-red-600 text-gray-200 px-2 py-2 rounded-md ",
                   on: {
                     click: function($event) {
                       return _vm.addOrder()
                     }
                   }
                 },
-                [_vm._v("\n                comprar\n            ")]
+                [_vm._v("Pidela!")]
               )
             ]
           )
         ]
       )
-    ]
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

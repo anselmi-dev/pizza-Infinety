@@ -16,11 +16,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         // ROLES: 'developer', 'admin', 'client'
-
-        User::factory()
-            ->count(1)
-            ->create();
-
         $user = User::firstOrCreate([
             'name' => 'Develop',
             'email' => 'develop@pizzainfinety.com',

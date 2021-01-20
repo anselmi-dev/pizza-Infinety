@@ -10,13 +10,6 @@
                     Pizza Infinety
                 </span>
             </a>
-            {{--
-            <div class="hidden lg:flex items-center justify-center antialiased lg:ml-20 pt-1">
-            <a class="flex items-center justify-center mr-10 text-2xl text-gray-700 text-opacity-90 font-medium tracking-tight hover:text-cool-gray-600 transition duration-150 ease-in-out"
-                href="{{ route('pizzas') }}">
-                {{ __('Pizzas') }}
-            </a>
-            </div> --}}
         </div>
         <div class="hidden md:flex items-center justify-center">
             @guest

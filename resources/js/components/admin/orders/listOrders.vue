@@ -8,13 +8,6 @@
                     class="text-blue-dark py-4 font-normal text-lg">
                       Ordenes
                   </h3>
-                  <div class="flex">
-                    <button
-                        type="button"
-                        class="appearance-none py-4 text-blue-dark border-b border-blue-dark mr-3">
-                        List
-                    </button>
-                  </div>
                 </div>
             </div>
             <div v-if="data.length">

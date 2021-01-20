@@ -1,23 +1,26 @@
 <template>
-    <div class="flex flex-col justify-center items-center px-4 my-8 w-full sm:w-1/2 md:w-1/3">
-        <div
-            v-bind:style="{ backgroundImage: 'url(' + image + ')' }"
-            class="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center">
-        </div>
-        <div class="w-9/12 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
-            <div class="py-2 text-center font-bold uppercase tracking-wide text-gray-800 px-2">
-                {{ pizza.name }}
-            </div>
-            <div class="flex items-center justify-between py-2 px-3 bg-gray-400 -mx-1">
-                <h1 class="text-gray-800 font-bold px-1">
-                    USD {{ pizza.price }}
-                </h1>
-                <button
-                    @click="addOrder()"
-                    class="bg-red-600 text-xs text-white px-2 py-1 font-semibold rounded uppercase hover:bg-gray-700 px-1">
-                    comprar
-                </button>
-            </div>
+    <div class="p-4 max-w-full md:w-1/2 ">
+        <div class="md:flex shadow-lg h-50">
+            <div class="w-full md:w-1/3 h-50 rounded-lg rounded-r-none pb-5/6 bg-gray-200" v-bind:style="{backgroundImage: 'url(' + image + ')' }" style="background-position: center;background-size: cover;"></div>
+
+            <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg" style="display: flex; flex-wrap: wrap; justify-content: space-between; flex-direction: column;">
+                <div>
+                    <div class="flex items-center">
+                        <h2 class="text-2xl text-gray-800 font-medium mr-auto">{{ pizza.name }}</h2>
+                    </div>
+                    <p class="text-sm text-gray-700 mt-4 -mx-1">
+                        <span class="mx-1 rounded bg-gray-200 p-2" v-for="(ingredient, index) in pizza.ingredients" :key="index">
+                            {{ingredient.name}}
+                        </span>
+                    </p>
+                </div>
+                <div class="flex items-center justify-end mt-4 top-auto">
+                    <p class="text-red-500 font-semibold tracking-tighter mr-auto ">
+                        USD {{ pizza.price }}
+                    </p>
+                    <button class=" bg-red-400 hover:bg-red-600 text-gray-200 px-2 py-2 rounded-md " @click="addOrder()">Pidela!</button>
+                </div>
+           </div>
         </div>
     </div>
 </template>
